@@ -1,10 +1,12 @@
 import express from "express";
 import pg from "pg";
-
+import dotenv from "dotenv";
 const app = express();
 const port = 3000;
 
-const {Pool} = new pg
+const {Pool} = pg
+
+dotenv.config();
 
 app.use(express.json());
 app.use(
@@ -14,11 +16,11 @@ app.use(
 );
 
 const pool = new Pool({
-    user: process.env.USER,
-    host: process.env.HOST,
-    database: process.env.DATABASE,
-    password: process.env.PASSWORD,
-    port: process.env.PORT,
+    user: String(process.env.USER),
+    host: String(process.env.HOST),
+    database: String(process.env.DATABASE),
+    password: String(process.env.PASSWORD),
+    port: Number(process.env.PORT),
 });
 
 app.get("/", (req, res) => {
